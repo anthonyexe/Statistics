@@ -57,5 +57,6 @@ public class StatsTester {
 		System.out.println("Random Integers from 0 to 2: " + randomInts);
 		
 		System.out.println("Monty Hall with no Change: " + monty.noChange(10000));
+		System.out.println("Binomial Distribution given p = 0.80, q = 0.20, n = 10, and y = 7: " + lib.binomialDistribution(10, 7, 0.80));
 	}
 }

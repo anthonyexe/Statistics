@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.Math;
 
 public class StatsLibrary {
 	public void StatsLibrary() {
@@ -132,5 +133,14 @@ public class StatsLibrary {
 		result = (factorial(n)) / (factorial(n - r));
 		
 		return result;
+	}
+	
+	public double binomialDistribution(int n, int y, double p) {
+		double probability;
+		double q = 1 - p;
+		
+		probability = (combination(n, y)) * (Math.pow(p,  y)) * (Math.pow(q,  (n - y)));
+		
+		return probability;
 	}
 }
