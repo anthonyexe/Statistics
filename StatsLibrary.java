@@ -134,12 +134,21 @@ public class StatsLibrary {
 		
 		return result;
 	}
-	
+	//Binomial Distribution (GOOD)
 	public double binomialDistribution(int n, int y, double p) {
 		double probability;
 		double q = 1 - p;
 		
 		probability = (combination(n, y)) * (Math.pow(p,  y)) * (Math.pow(q,  (n - y)));
+		
+		return probability;
+	}
+	//Geometric Distribution (GOOD)
+	public double geometricDistribution(int n, double p) {
+		double probability;
+		double q = 1 - p;
+		
+		probability = (Math.pow(q, n-1)) * p;
 		
 		return probability;
 	}
