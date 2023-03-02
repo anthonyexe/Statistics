@@ -6,7 +6,7 @@ public class BirthdayProblem {
 		
 	}
 	// Help with generating random integers in a specified range from (https://mkyong.com/java/java-generate-random-integers-in-a-range/)
-	public ArrayList<String> birthday(int n) {
+	public ArrayList<String> stringBirthdays(int n) {
 		ArrayList<String> birthdays = new ArrayList<String>();
 		
 		for (int i = 0; i < n; i++) {
@@ -33,7 +33,7 @@ public class BirthdayProblem {
 		return birthdays;
 	}
 	
-	public ArrayList<Integer> birthday2(int n) {
+	public ArrayList<Integer> intBirthdays(int n) {
 		ArrayList<Integer> birthdays2 = new ArrayList<Integer>();
 		
 		for (int i = 0; i < n; i++) {
@@ -43,13 +43,14 @@ public class BirthdayProblem {
 		
 		return birthdays2;
 	}
+	
 	public double birthdayProblem(int n, int m) {
 		double count = 0;
 		double probability;
 		
 		for (int i = 0; i < n; i++) {
 			HashSet<String> dupeSet = new HashSet<String>();
-			ArrayList<String> birthdayList = birthday(m);
+			ArrayList<String> birthdayList = stringBirthdays(m);
 			
 			for (int j = 0; j < birthdayList.size(); j++) {
 				dupeSet.add(birthdayList.get(j));
@@ -59,17 +60,6 @@ public class BirthdayProblem {
 				count++;
 			}
 		}
-		
-		/*
-		ArrayList<String> birthdayList= birthday(m);
-		for (int i = 0; i < birthdayList.size(); i++) {
-				for (int j = 1; j < birthdayList.size(); j++) {
-					if(birthdayList.get(i).equals(birthdayList.get(j)))
-						count++;
-				}
-			}
-		
-		*/
 		probability = count / n;
 		return probability;
 	}
@@ -80,7 +70,7 @@ public class BirthdayProblem {
 		
 		for (int i = 0; i <n; i++) {
 			HashSet<Integer> dupeSet = new HashSet<Integer>();
-			ArrayList<Integer> birthdayList = birthday2(m);
+			ArrayList<Integer> birthdayList = intBirthdays(m);
 			
 			for (int j = 0; j < birthdayList.size(); j++) {
 				dupeSet.add(birthdayList.get(j));
