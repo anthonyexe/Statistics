@@ -192,9 +192,9 @@ public class StatsLibrary {
 	}
 	/**
 	 * 
-	 * @param n (An integer)
-	 * @param r (An integer)
-	 * @return result (The number of possible combinations given n as the total number of numbers/items to choose from and r as the number of items selected where order does not matter; in the form of a BigInteger)
+	 * @param n (An integer; the total number of items to choose from)
+	 * @param r (An integer; the number of items selected)
+	 * @return result (The number of possible arrangements given n and r where order does not matter; in the form of a BigInteger)
 	 */
 	public BigInteger combination(int n, int r) {
 		BigInteger result;
@@ -205,9 +205,9 @@ public class StatsLibrary {
 	}
 	/**
 	 * 
-	 * @param n (An integer)
-	 * @param r (An integer)
-	 * @return result (The number of possible combinations given n as the total number of numbers/items to choose from and r as the number of items selected where order does matter; in the form of a BigInteger)
+	 * @param n (An integer; the total number of items to choose from)
+	 * @param r (An integer; the number of items selected)
+	 * @return result (The number of possible arrangements given n and r where order does matter; in the form of a BigInteger)
 	 */
 	public BigInteger permutation(int n, int r) {
 		BigInteger result;
