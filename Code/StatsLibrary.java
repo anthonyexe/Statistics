@@ -121,7 +121,7 @@ public class StatsLibrary {
 	 * 
 	 * @param list1 (An ArrayList of Integers)
 	 * @param list2 (An ArrayList of Integers)
-	 * @return complement (An ArrayList of Integers; the complement of list1 given list2 as a universal set of Integers)
+	 * @return list2 (An ArrayList of Integers; the complement of list1 given list2 as a universal set of Integers)
 	 */
 	/*
 	 * Complement; takes two ArrayLists of Integers as parameters. List2 acts as the "universal" set in which the complement of list1 is every element in list2 excluding all elements from list1.
@@ -139,7 +139,7 @@ public class StatsLibrary {
 	 * 
 	 * @param list1 (An ArrayList of Integers)
 	 * @param list2 (An ArrayList of Integers)
-	 * @return intersection (An ArrayList of Integers; the intersection of list1 and list2)
+	 * @return intersectionList (An ArrayList of Integers; the intersection of list1 and list2)
 	 */
 	/*
 	 * Intersection; takes two ArrayLists of Integers as parameters. Starts by declaring an empty ArrayList of Integers to act as the intersection list. It then iterates through list1 and for each element, checks if it exists in list2.
@@ -159,7 +159,7 @@ public class StatsLibrary {
 	 * 
 	 * @param list1 (An ArrayList of Integers)
 	 * @param list2 (An ArrayList of Integers)
-	 * @return union (An ArrayList of Integers; the union of list1 and list2)
+	 * @return list2 (An ArrayList of Integers; the union of list1 and list2)
 	 */
 	/*
 	 * Union; takes two ArrayLists of Integers as parameters. Starts by iterating through list1 and checks if each element is not contained in list2. If an element from list1 does not exist in list2, it is added to list2.
@@ -175,8 +175,12 @@ public class StatsLibrary {
 	}
 	/**
 	 * 
-	 * @param x
-	 * @return
+	 * @param x (An integer)
+	 * @return result (The factorial of x in the form of a BigInteger)
+	 */
+	/*
+	 * Factorial; takes an integer as a parameter. Starts by declaring a BigInteger (result) and assigning the value of x to it. Next, it iterates through a loop from 1 up to 1 less than the value of x. For each pass through the loop, 
+	 * the BigInteger result variable is assigned the value of itself multiplied with the current loop counter value. Once it completely iterates through the loop, result is returned.
 	 */
 	public BigInteger factorial(int x) {
 		BigInteger result = BigInteger.valueOf(x);
@@ -188,9 +192,9 @@ public class StatsLibrary {
 	}
 	/**
 	 * 
-	 * @param n
-	 * @param r
-	 * @return
+	 * @param n (An integer)
+	 * @param r (An integer)
+	 * @return result (The number of possible combinations given n as the total number of numbers/items to choose from and r as the number of items selected where order does not matter; in the form of a BigInteger)
 	 */
 	public BigInteger combination(int n, int r) {
 		BigInteger result;
@@ -201,9 +205,9 @@ public class StatsLibrary {
 	}
 	/**
 	 * 
-	 * @param n
-	 * @param r
-	 * @return
+	 * @param n (An integer)
+	 * @param r (An integer)
+	 * @return result (The number of possible combinations given n as the total number of numbers/items to choose from and r as the number of items selected where order does matter; in the form of a BigInteger)
 	 */
 	public BigInteger permutation(int n, int r) {
 		BigInteger result;
@@ -214,10 +218,10 @@ public class StatsLibrary {
 	}
 	/**
 	 * 
-	 * @param n
-	 * @param y
-	 * @param p
-	 * @return
+	 * @param n (An integer)
+	 * @param y (An integer)
+	 * @param p (A double)
+	 * @return probability (
 	 */
 	public double binomialDistribution(int n, int y, double p) {
 		double probability;
