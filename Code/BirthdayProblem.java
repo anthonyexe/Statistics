@@ -1,6 +1,10 @@
 import java.util.*;
 import java.util.HashSet;
-
+/**
+ * 
+ * @author Anthony D'Alessandro
+ *
+ */
 public class BirthdayProblem {
 	public void Person() {
 		
