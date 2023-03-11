@@ -58,8 +58,19 @@ public class StatsLibrary {
 	 * @param list (An ArrayList of Integers)
 	 * @return mode (The value that occurs the most frequently in the list)
 	 */
-	/* Mode; takes an ArrayList of Integers as a parameter,
+	/* 
+	 * Mode; takes an ArrayList of Integers as a parameter. Starts by declaring a new HashMap object, three integers temp, greatest, and index, as well as one Integer object to store the final mode value. Starts by iterating through the list declaring an int variable count 
+	 * inside the outer loop followed by starting an inner loop to iterate through the list again to compare list values. Inside the inner loop, the list value at the i'th index is compared to the list value at the j'th index. If the values are equal to each other, the count 
+	 * variable is incremented. Next, outside of the inner loop but still inside of the outer loop, the list value at the i'th index is added to the hashmap along with the corresponding count value to represent the number of occurrences of that list value.
 	 * 
+	 * Once every element of the list has been counted and entered into the hashmap, it then moves on and iterates through the hashmap assigning the temp variable to the hashmap value at the i'th index. It then checks if the temp value is greater than the greatest variable (which
+	 * starts with a value of 0). If temp is greater than the greatest variable, then greatest is reassigned the value of temp and the index variable is assigned the value of the loop counter (i). Once it iterates through the whole hashmap, the greatest value from the map should be
+	 * stored in the greatest variable with its corresponding index stored in the index variable.
+	 * 
+	 * Next, using the index of the greatest map value, that value is removed from the hashmap. It then checks if the hashmap still contains the value of the greatest variable or if the value of the greatest variable is less than or equal to 1. If the hashmap still contains the value 
+	 * of the greatest variable, then that must mean there were multiple modes in which the mode value to be returned should be null. In the other case of the greatest variable having a value of less than or equal to 1, this indicates that there was actually no mode in which the mode 
+	 * value to be returned should also be null. Finally, the only other possible case in which the hashmap does not still contain the value of the greatest variable and it is greater than 1, there must be a mode in which the value to be returned is assigned by retrieving the list value 
+	 * using the index value of the greatest variable. The mode is then returned.
 	 */
 	public Integer mode(ArrayList<Integer> list) {
 		// Returns null if there is no mode or if there is more than one mode
@@ -196,6 +207,10 @@ public class StatsLibrary {
 	 * @param r (An integer; the number of items selected)
 	 * @return result (The number of possible arrangements given n and r where order does not matter; in the form of a BigInteger)
 	 */
+	/*
+	 * Combination; takes two integers n and r as parameters. Starts by declaring a BigInteger variable for the result. Next, applies the combination formula by taking the factorial of (n - r) and multiplying it by the factorial of r, then divides the factorial
+	 * of n by that product. The result is then returned.
+	 */
 	public BigInteger combination(int n, int r) {
 		BigInteger result;
 		
@@ -209,6 +224,10 @@ public class StatsLibrary {
 	 * @param r (An integer; the number of items selected)
 	 * @return result (The number of possible arrangements given n and r where order does matter; in the form of a BigInteger)
 	 */
+	/*
+	 * Permutation; takes two integers n and r as parameters. Starts by declaring a BigInteger variable for the result. Next, applies the permutation formula by taking the factorial of (n - r) and dividing the factorial of n by that result.
+	 * The result is then returned.
+	 */
 	public BigInteger permutation(int n, int r) {
 		BigInteger result;
 		
@@ -218,13 +237,19 @@ public class StatsLibrary {
 	}
 	/**
 	 * 
-	 * @param n (An integer)
-	 * @param y (An integer)
-	 * @param p (A double)
-	 * @return probability (
+	 * @param n (An integer; the total number of trials)
+	 * @param y (An integer; the number of successes)
+	 * @param p (A double; the probability of success for a single trial)
+	 * @return probability (A double; the probability distribution of an experiment given n trials and y successes where the outcome of a trial is either a success or a failure (p or q))
+	 */
+	/*
+	 * Binomial Distribution; takes two integers n and y as well as a double p as parameters. Starts by declaring a double for probability and defining the probability of failure for a single trials by taking the complement of p (the probability of success). Next, declares a double for
+	 * the combination of n and y and assigns this value by calling the combination function using n and y as parameters. It then applies the binomial distribution formula by raising the probability of failure to the power of n - y, raising the probability of success to the power of y, 
+	 * and then multiplying those two results together followed by multiplying that product by the combination of n and y. The probability is then returned.
 	 */
 	public double binomialDistribution(int n, int y, double p) {
 		double probability;
+		//q is the probability of failure for a single trial
 		double q = 1 - p;
 		double comb = combination(n, y).doubleValue();
 
@@ -234,12 +259,17 @@ public class StatsLibrary {
 	}
 	/**
 	 * 
-	 * @param n
-	 * @param p
-	 * @return
+	 * @param n (An integer; the number of trials needed for the first success)
+	 * @param p (A double; the probability of success for a single trial)
+	 * @return probability (A double; the probability of success (p) on the nth trial)
+	 */
+	/*
+	 * Geometric Distribution; takes an integer n and a double p as parameters. Starts by declaring a double for probability and defining the probability of failure for a single trial by taking the complement of p (the probability of success). Next, applies the
+	 * geometric distribution formula by raising the probability of failure to the power of n - 1 and then multiplying that result by the probability of success. The probability is then returned.  
 	 */
 	public double geometricDistribution(int n, double p) {
 		double probability;
+		//q is the probability of failure for a single trial
 		double q = 1 - p;
 		
 		probability = (Math.pow(q, n-1)) * p;

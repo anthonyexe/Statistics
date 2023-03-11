@@ -1,9 +1,12 @@
-//Anthony D'Alessandro
 import java.util.*;
 
 
 public class MontyHall {
-
+	/**
+	 * 
+	 * @param n (An integer representing the number of times to run the experiment)
+	 * @return probability (A double representing the probability of winning the door game if the user does not change their guess)
+	 */
 	public double noChange(int n) {
 		Random rand = new Random();
 		double count = 0;
@@ -24,7 +27,11 @@ public class MontyHall {
 		return probability;
 	}
 	
-
+	/**
+	 * 
+	 * @param n (An integer representing the number of times to run the experiment)
+	 * @return probability (A double representing the probability of winning the door game if the user changes their guess)
+	 */
 	public double withChange(int n) {
 		Random rand = new Random();
 		double count = 0;
