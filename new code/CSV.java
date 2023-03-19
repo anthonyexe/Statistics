@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.io.*;
 import java.lang.Math;
 import java.util.*;
@@ -15,16 +14,18 @@ public class CSV {
 			fWriter.write(System.lineSeparator());
 			double x = min + interval;
 			// for (int count = 1; count < rows; count++) --> Working for loop
-			for (int count = 1; count < max; count += interval) {
-				if (count == 1) {
+			for (double counter = min; counter < max; counter += interval) {
+				if (!(counter > min)) {
 					double y = Math.pow(min, 2) + 2 * min + 1;
 					fWriter.write(min + "," + y);
 					fWriter.write(System.lineSeparator());
 				}
-				double y = Math.pow(x, 2) + 2 * x + 1;
-				fWriter.write(x + "," + y);
-				fWriter.write(System.lineSeparator());
-				x += interval;
+				if (counter + interval <= max) {
+					double y = Math.pow(x, 2) + 2 * x + 1;
+					fWriter.write(x + "," + y);
+					fWriter.write(System.lineSeparator());
+					x += interval;
+				}
 			}
 			fWriter.close();
 		} catch (FileNotFoundException e) {
