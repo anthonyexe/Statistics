@@ -276,4 +276,41 @@ public class StatsLibrary {
 		
 		return probability;
 	}
+	/**
+	 * 
+	 * @param n (An integer; the total number of items (population))
+	 * @param m (An integer; the number of items chosen as a sample)
+	 * @param r (An integer; the total number of success states)
+	 * @param y (An integer; the number of observed success states)
+	 * @return probability (A double; the probability of y successes in m items chosen given a population n that contains r success states)
+	 */
+	public double hypergeometricDistribution(int n, int m, int r, int y) {
+		double probability;
+		
+		probability = (combination(r, y).multiply(combination(n - r, m - y))).doubleValue() / (combination(n, m).doubleValue());
+		
+		return probability;
+	}
+	/**
+	 * 
+	 * @param lambda (An integer; the average number of events in a time interval)
+	 * @param y (An integer; the number of occurrences of the event)
+	 * @return probability (A double; the probability of y events occurring in a given time interval if the desired event occurs at an average rate that stays constant) 
+	 */
+	public double poissonDistribution(int lambda, int y) {
+		double probability;
+		
+		double negativeLambda = lambda * -1;
+		probability = (Math.pow(lambda, y) / factorial(y).doubleValue()) * (Math.exp(negativeLambda));
+		
+		return probability;
+	}
+	
+	public double chebyshev(double lowerRange, double upperRange, double mean, double standardDeviation) {
+		double percentage;
+		double k = (upperRange - mean) / standardDeviation;
+		percentage = 1 - (1 / (k*k));
+		
+		return percentage;
+	}
 }
