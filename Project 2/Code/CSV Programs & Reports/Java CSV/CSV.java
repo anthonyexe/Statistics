@@ -7,13 +7,11 @@ public class CSV {
 		File csvPlot = new File(fileName + ".csv");
 		
 		String header = ("x, y, y = x^2 + 2x + 1");
-		//int rows = (int) (max/interval) - 1;
 		try {
 			FileWriter fWriter = new FileWriter(csvPlot);
 			fWriter.write(header);
 			fWriter.write(System.lineSeparator());
 			double x = min + interval;
-			// for (int count = 1; count < rows; count++) --> Working for loop
 			for (double counter = min; counter < max; counter += interval) {
 				if (!(counter > min)) {
 					double y = Math.pow(min, 2) + 2 * min + 1;
