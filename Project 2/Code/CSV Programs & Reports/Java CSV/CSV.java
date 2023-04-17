@@ -80,7 +80,7 @@ public class CSV {
 			and terminates once nextLine is null (the end of the file has been reached)
 			*/
 			for (nextLine = bReader.readLine(); nextLine != null; nextLine = bReader.readLine(), count++) {
-				/*Skip the first line (header) then store the values from each line, separating them by 
+				/*Skip the first line (header) then store the values from each line, splitting them by 
 				commas, to a String array. Next, add the values from the String array to the ArrayList
 				of Strings so by the end of the loop, the ArrayList contains all x values and y values
 				from the file.
@@ -100,7 +100,7 @@ public class CSV {
 			e.printStackTrace();
 		}
 		
-		//Loop for salting the values that were read from the file
+		//Loop for salting the y values that were read from the file
 		for (int i = 0; i < yValues.size(); i++) {
 			/*If the counter is odd (equivalent to the index of the values in the second column of the CSV file),
 			then salt the value at that index in the ArrayList of x and y values.
@@ -128,40 +128,62 @@ public class CSV {
 			FileWriter fWriter = new FileWriter(saltedCSV);
 			//Loop through the x and y values
 			for (int i = 0; i < yValues.size(); i++) {
+				//Write the current value to the file and separate it by a comma
 				fWriter.write(yValues.get(i) + ",");
+				//Move to the next line after each pair of x and y values are written to the file
 				if (i % 2 != 0)
 					fWriter.write(System.lineSeparator());
 			}
+			//Close the FileWriter
 			fWriter.close();
+		//Catch any FileNotFoundExceptions and print the stack trace
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		//Catch any IOExceptions and print the stack trace
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	//Smoother function that takes a file name and a window value for the smoothing window as parameters
 	public void smoother(String fileName, int windowValue) {
+		//Create a new ArrayList of Strings to hold the values from the salted data CSV file
 		ArrayList<String> yValues = new ArrayList<String>();
+		//Create a new File object using "smoothedCSV.csv" as the file name
 		File smoothedCSV = new File("smoothedCSV.csv");
 		
 		try {
+			//Create a new FileReader instance using the file name parameter
 			FileReader fReader = new FileReader(fileName);
+			//Create a new BufferedReader instance using the FileReader object
 			BufferedReader bReader = new BufferedReader(fReader);
 			
+			//Create a nextLine String to hold each line while reading from the file
 			String nextLine;
 			int count = 0;
 			
+			/*Loop for reading the file where nextLine is assigned the next available line during each pass
+			and terminates once nextLine is null (the end of the file has been reached)
+			*/
 			for (nextLine = bReader.readLine(); nextLine != null; nextLine = bReader.readLine(), count++) {
+				/*Store the values from each line, splitting them by commas, to a String array. Next, 
+				add the values from the String array to the ArrayList of Strings so by the end of the 
+				loop, the ArrayList contains all x values and y values from the file.
+				*/
 				String[] lineValues = nextLine.split(",");
 				yValues.addAll(Arrays.asList(lineValues));
 			}
+			//Close the BufferedReader which also closes the FileReader
 			bReader.close();
+		//Catch any FileNotFoundExceptions and print the stack trace
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		//Catch any IOExceptions and print the stack trace
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		//Loop for smoothing the y values that were read from the file
 		for (int i = 0; i < yValues.size(); i++) {
 			if (i % 2 == 1) {
 				ArrayList<Double> yRanges = new ArrayList<Double>();
