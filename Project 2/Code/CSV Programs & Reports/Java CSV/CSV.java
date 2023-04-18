@@ -59,7 +59,7 @@ public class CSV {
 	*/
 	public void salter(String fileName, int saltRangeMin, int saltRangeMax) {
 		//Create a new ArrayList of Strings to hold the values from the plotter CSV file
-		ArrayList<String> yValues = new ArrayList<String>();
+		ArrayList<String> xyValues = new ArrayList<String>();
 		//Create a new File object with 'salted' added to the beginning of the file name
 		File saltedCSV = new File("salted" + fileName);
 		//Create a new random object to generate random numbers
@@ -87,7 +87,7 @@ public class CSV {
 				*/
 				if (count > 0) {
 					String[] lineValues = nextLine.split(",");
-					yValues.addAll(Arrays.asList(lineValues));
+					xyValues.addAll(Arrays.asList(lineValues));
 				}
 			}
 			//Close the BufferedReader which also closes the FileReader
@@ -101,7 +101,7 @@ public class CSV {
 		}
 		
 		//Loop for salting the y values that were read from the file
-		for (int i = 0; i < yValues.size(); i++) {
+		for (int i = 0; i < xyValues.size(); i++) {
 			/*If the counter is odd (equivalent to the index of the values in the second column of the CSV file),
 			then salt the value at that index in the ArrayList of x and y values.
 			*/
@@ -111,7 +111,7 @@ public class CSV {
 				//Create a random boolean value to choose whether to add or subtract the salt value
 				boolean decision = rand.nextBoolean();
 				//Create a temp variable to hold the value at the current index in the ArrayList of x and y values
-				Double temp = Double.parseDouble(yValues.get(i));
+				Double temp = Double.parseDouble(xyValues.get(i));
 				//If the random boolean value is true, add the salt value to the current value
 				if (decision)
 					temp += saltValue;
@@ -119,7 +119,7 @@ public class CSV {
 				else
 					temp -= saltValue;
 				//Update the value at the current index to be the salted y value
-				yValues.set(i, temp.toString());
+				xyValues.set(i, temp.toString());
 			}
 		}
 		
@@ -127,9 +127,9 @@ public class CSV {
 			//Create a new FileWriter instance using the saltedCSV File object
 			FileWriter fWriter = new FileWriter(saltedCSV);
 			//Loop through the x and y values
-			for (int i = 0; i < yValues.size(); i++) {
+			for (int i = 0; i < xyValues.size(); i++) {
 				//Write the current value to the file and separate it by a comma
-				fWriter.write(yValues.get(i) + ",");
+				fWriter.write(xyValues.get(i) + ",");
 				//Move to the next line after each pair of x and y values are written to the file
 				if (i % 2 != 0)
 					fWriter.write(System.lineSeparator());
@@ -148,7 +148,7 @@ public class CSV {
 	//Smoother function that takes a file name and a window value for the smoothing window as parameters
 	public void smoother(String fileName, int windowValue) {
 		//Create a new ArrayList of Strings to hold the values from the salted data CSV file
-		ArrayList<String> yValues = new ArrayList<String>();
+		ArrayList<String> xyValues = new ArrayList<String>();
 		//Create a new File object using "smoothedCSV.csv" as the file name
 		File smoothedCSV = new File("smoothedCSV.csv");
 		
@@ -171,7 +171,7 @@ public class CSV {
 				loop, the ArrayList contains all x values and y values from the file.
 				*/
 				String[] lineValues = nextLine.split(",");
-				yValues.addAll(Arrays.asList(lineValues));
+				xyValues.addAll(Arrays.asList(lineValues));
 			}
 			//Close the BufferedReader which also closes the FileReader
 			bReader.close();
@@ -184,25 +184,25 @@ public class CSV {
 		}
 		
 		//Loop for smoothing the y values that were read from the file
-		for (int i = 0; i < yValues.size(); i++) {
+		for (int i = 0; i < xyValues.size(); i++) {
 			if (i % 2 == 1) {
 				ArrayList<Double> yRanges = new ArrayList<Double>();
 				Double yAverage;
 				Double sum = 0.0;
-				Double temp = Double.parseDouble(yValues.get(i));
+				Double temp = Double.parseDouble(xyValues.get(i));
 				int surroundingIndex = 0;
-				int yValuesMax = yValues.size();
+				int yValuesMax = xyValues.size();
 				yRanges.add(temp);
 				
 				
 				for (int j = 1; j <= windowValue; j++) {
 					surroundingIndex += 2;
 					if (i + surroundingIndex <= yValuesMax) {
-						yRanges.add(Double.parseDouble(yValues.get(i + surroundingIndex)));
+						yRanges.add(Double.parseDouble(xyValues.get(i + surroundingIndex)));
 					}
 					
 					if (i - surroundingIndex >= 1) {
-						yRanges.add(Double.parseDouble(yValues.get(i - surroundingIndex)));
+						yRanges.add(Double.parseDouble(xyValues.get(i - surroundingIndex)));
 					}
 				}
 				
@@ -211,14 +211,14 @@ public class CSV {
 				}
 				
 				yAverage = sum / yRanges.size();
-				yValues.set(i, yAverage.toString());
+				xyValues.set(i, yAverage.toString());
 			}
 		}
 		
 		try {
 			FileWriter fWriter = new FileWriter(smoothedCSV);
-			for (int i = 0; i < yValues.size(); i++) {
-				fWriter.write(yValues.get(i) + ",");
+			for (int i = 0; i < xyValues.size(); i++) {
+				fWriter.write(xyValues.get(i) + ",");
 				if (i % 2 != 0)
 					fWriter.write(System.lineSeparator());
 			}
