@@ -1,3 +1,4 @@
+//Anthony D'Alessandro
 import java.io.*;
 import java.lang.Math;
 import java.util.*;
@@ -185,46 +186,85 @@ public class CSV {
 		
 		//Loop for smoothing the y values that were read from the file
 		for (int i = 0; i < xyValues.size(); i++) {
+			/*If the counter is odd (equivalent to the index of the values in the second column of the CSV file),
+			then smooth the values using the window value and the current index in the ArrayList of x and y values.
+			*/
 			if (i % 2 == 1) {
+				/*Create an ArrayList of Doubles to hold the values within the range of the window
+				for each y value
+				*/
 				ArrayList<Double> yRanges = new ArrayList<Double>();
+				/*Declare a Double variable to hold the average of the values within the range of the window for the 
+				current y value
+				*/
 				Double yAverage;
+				//Declare a Double variable to hold the sum of the values
 				Double sum = 0.0;
+				//Declare and assign a Double variable the current y value at the index
 				Double temp = Double.parseDouble(xyValues.get(i));
+				/*Declare and assign an int variable to 0 for eventually holding the index of the surrounding values for the 
+				current y value
+				*/
 				int surroundingIndex = 0;
+				//Declare and assign an int variable to hold the maximum index of the x and y values
 				int yValuesMax = xyValues.size();
+				//Add the current y value to the ArrayList of y values
 				yRanges.add(temp);
 				
-				
+				/*For loop to increment up to the window value and add the surrounding y values to the ArrayList of y values
+				for each pass
+				*/
 				for (int j = 1; j <= windowValue; j++) {
+					/*Increment the surrounding index value (adds 2 because in the list of x and y values, each y value 
+					is at an odd index so the next/previous y value will either be 2 more or less than the current index 
+					given that the current index is odd)
+					*/
 					surroundingIndex += 2;
+					/*If the current index + the surrounding index value is less than or equal to the maximum index, 
+					then add the y value at that position to the ArrayList of y values
+					*/
 					if (i + surroundingIndex <= yValuesMax) {
 						yRanges.add(Double.parseDouble(xyValues.get(i + surroundingIndex)));
 					}
-					
+					/*If the current index - the surrounding index value is greater than or equal to 1, 
+					then add the y value at that position to the ArrayList of y values
+					*/
 					if (i - surroundingIndex >= 1) {
 						yRanges.add(Double.parseDouble(xyValues.get(i - surroundingIndex)));
 					}
 				}
-				
+				//Loop through the ArrayList of y values
 				for (int k = 0; k < yRanges.size(); k++) {
+					//Add all of the y values together to get their total sum
 					sum += yRanges.get(k);
 				}
 				
+				//Assign the average variable the sum of the y values divided by the number of y values (their average)
 				yAverage = sum / yRanges.size();
+				/*Reassign the value at the current index of the x and y values the average of the surrounding values in 
+				the range of the window value
+				*/
 				xyValues.set(i, yAverage.toString());
 			}
 		}
 		
 		try {
+			//Create a new FileWriter instance using the smoothedCSV File object
 			FileWriter fWriter = new FileWriter(smoothedCSV);
+			//Loop through the x and y values
 			for (int i = 0; i < xyValues.size(); i++) {
+				//Write the current value to the file and separate it by a comma
 				fWriter.write(xyValues.get(i) + ",");
+				//Move too the next line after each pair of x and y values are written to the file
 				if (i % 2 != 0)
 					fWriter.write(System.lineSeparator());
 			}
+			//Close the FileWriter
 			fWriter.close();
+		//Catch any FileNotFoundExceptions and print the stack trace
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		//Catch any IOExceptions and print the stack trace
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
