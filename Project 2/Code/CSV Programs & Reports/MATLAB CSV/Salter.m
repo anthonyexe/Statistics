@@ -1,3 +1,4 @@
+%Anthony D'Alessandro
 %Salter function that takes a file name, a minimum salt value for the range
 %of the salting value, and a maximum salt value for the range of the
 %salting value as parameters
