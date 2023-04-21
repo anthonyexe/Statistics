@@ -1,3 +1,4 @@
+%Anthony D'Alessandro
 %Plotter function that takes a file name, a minimum value for the range of
 %x, a maximum value for the range of x, and an increment value as
 %parameters
