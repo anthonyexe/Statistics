@@ -146,44 +146,71 @@ public class ApacheJFreeChartCSV {
 		for (int i = 0; i < xyValues.size(); i++) {
 			/*If the counter is even (equivalent to the index of the x-values in the first column of the CSV file), then
 			add the value from the ArrayList of x and y values to the ArrayList of x-values. Since the ArrayList of x and y
-			values stores the values in a String format, Double.parseDouble is used to conver the values to Doubles and then
+			values stores the values in a String format, Double.parseDouble is used to convert the values to Doubles and then
 			store them in the ArrayList of x-values.
 			*/
 			if (i % 2 == 0)
 				xValues.add(Double.parseDouble(xyValues.get(i)));
-			if (i % 2 == 1) {
+			/*If the counter is odd (equivalent to the index of the values in the second column of the CSV file),
+			then salt the value at that index in the ArrayList of x and y values.
+			*/
+			if (i % 2 == 1) {.
+				//Create a saltValue variable to hold the random salt value in the range of saltRangeMin to saltRangeMax
 				double saltValue = saltRangeMin + (saltRangeMax - saltRangeMin) * rand.nextDouble();
+				//Create a random boolean value to choose whether to add or subtract the salt value
 				boolean decision = rand.nextBoolean();
+				//Create a temp variable to hold the value at the current index in the ArrayList of x and y values
 				Double temp = Double.parseDouble(xyValues.get(i));
+				//If the random boolean value is true, add the salt value to the current value
 				if (decision)
 					temp += saltValue;
+				//If the random boolean value is false, subtract the value from the current value
 				else
 					temp -= saltValue;
+				/*Since the values at each odd index in the ArrayList of x and y values are y-values, add each one to the 
+				ArrayList of y-values. The y value has already been converted to a Double and stored in the temp variable 
+				so temp is simply used to add the value to the list.
+				*/
 				yValues.add(temp);
+				//Update the value at the current index to be the salted y value
 				xyValues.set(i, temp.toString());
 			}
 		}
 		
 		try {
+			//Create a new FileWriter instance using the saltedCSV File object
 			FileWriter fWriter = new FileWriter(saltedCSV);
+			//Loop through the x and y values
 			for (int i = 0; i < xyValues.size(); i++) {
+				//Write the current value to the file and separate it by a comma
 				fWriter.write(xyValues.get(i) + ",");
+				//Move to the next line after each pair of x and y values are written to the file
 				if (i % 2 == 0)
 					fWriter.write(System.lineSeparator());
 			}
+			//Close the FileWriter
 			fWriter.close();
+		//Catch any FileNotFoundExceptions and print the stack trace
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		//Catch any IOExceptions and print the stack trace
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		/*Create a new Graph object passing "Salter" as the application name, a string describing the salting range as the graph title, 
+		the ArrayList of x-values as the x-axis dataset, and the ArrayList of y-values as the y-axis dataset
+		*/
 		Graph plot = new Graph("Salter", "Salted Data With a Salt Range of [" + saltRangeMin + ", " + saltRangeMax + "]", xValues, yValues);
+		//Pack the Graph to size it to the preferred size
 		plot.pack();
+		//Set the Graph visibility to true so it shows the component
 		plot.setVisible(true);
 	}
 	
+	//Smoother function that takes a file name and a window value for the smoothing window as parameters
 	public void smoother(String fileName, int windowValue) {
+		//Create
 		DescriptiveStatistics stats = new DescriptiveStatistics();
 		ArrayList<String> xyValues = new ArrayList<String>();
 		ArrayList<Double> doubleYValues = new ArrayList<Double>();
