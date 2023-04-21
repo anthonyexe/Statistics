@@ -1,3 +1,4 @@
+%Anthony D'Alessandro
 %Smoother function the takes a file name and a window value for the
 %smoothing window as parameters
 function Smoother(fileName, windowValue)
