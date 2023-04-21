@@ -143,6 +143,7 @@ public class ApacheJFreeChartCSV {
 			e.printStackTrace();
 		}
 		
+		//Loop for salting the y values that were read from the file
 		for (int i = 0; i < xyValues.size(); i++) {
 			/*If the counter is even (equivalent to the index of the x-values in the first column of the CSV file), then
 			add the value from the ArrayList of x and y values to the ArrayList of x-values. Since the ArrayList of x and y
@@ -167,9 +168,8 @@ public class ApacheJFreeChartCSV {
 				//If the random boolean value is false, subtract the value from the current value
 				else
 					temp -= saltValue;
-				/*Since the values at each odd index in the ArrayList of x and y values are y-values, add each one to the 
-				ArrayList of y-values. The y value has already been converted to a Double and stored in the temp variable 
-				so temp is simply used to add the value to the list.
+				/*Add the temp value to the list of salted y-values. The y-value has already been converted to a Double and 
+				stored in the temp variable so temp is simply used to add the value to the list.
 				*/
 				yValues.add(temp);
 				//Update the value at the current index to be the salted y value
@@ -199,7 +199,7 @@ public class ApacheJFreeChartCSV {
 		}
 		
 		/*Create a new Graph object passing "Salter" as the application name, a string describing the salting range as the graph title, 
-		the ArrayList of x-values as the x-axis dataset, and the ArrayList of y-values as the y-axis dataset
+		the ArrayList of x-values as the x-axis dataset, and the ArrayList of salted y-values as the y-axis dataset
 		*/
 		Graph plot = new Graph("Salter", "Salted Data With a Salt Range of [" + saltRangeMin + ", " + saltRangeMax + "]", xValues, yValues);
 		//Pack the Graph to size it to the preferred size
@@ -210,59 +210,103 @@ public class ApacheJFreeChartCSV {
 	
 	//Smoother function that takes a file name and a window value for the smoothing window as parameters
 	public void smoother(String fileName, int windowValue) {
-		//Create
+		//Create a new DescriptiveStatistics object
 		DescriptiveStatistics stats = new DescriptiveStatistics();
+		//Create a new ArrayList of Strings to hold the values from the salted data CSV file
 		ArrayList<String> xyValues = new ArrayList<String>();
+		//Create new ArrayLists of Doubles to hold y-values and x-values respectively
 		ArrayList<Double> doubleYValues = new ArrayList<Double>();
 		ArrayList<Double> xValues = new ArrayList<Double>();
-		File smoothedCSV = new File("smoothedCSV3.csv");
+		//Create a new File object using "smoothedCSV.csv" as the file name
+		File smoothedCSV = new File("smoothedCSV.csv");
 		
 		try {
+			//Create a new FileReader instance using the file name parameter
 			FileReader fReader = new FileReader(fileName);
+			//Create a new BufferedReader instance using the FileReader object
 			BufferedReader bReader = new BufferedReader(fReader);
 			
+			//Create a nextLine String to hold each line while reading from the file
 			String nextLine;
 			
+			/*Loop for reading the file where nextLine is assigned the next available line during each pass
+			and terminates once nextLine is null (the end of the file has been reached)
+			*/
 			for (nextLine = bReader.readLine(); nextLine != null; nextLine = bReader.readLine()) {
+				/*Store the values from each line, splitting them by commas, to a String array. Next, 
+				add the values from the String array to the ArrayList of Strings so by the end of the 
+				loop, the ArrayList contains all x values and y values from the file.
+				*/
 				String[] lineValues = nextLine.split(",");
 				xyValues.addAll(Arrays.asList(lineValues));
 			}
+			//Close the BufferedReader which also closes the FileReader
 			bReader.close();
+		//Catch any FileNotFoundExceptions and print the stack trace
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		//Catch any IOExceptions and print the stack trace
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		//Set the window size using the windowValue parameter for the DescriptiveStatistics object
 		stats.setWindowSize(windowValue);
 		
+		//Loop for smoothing the y values that were read from the file
 		for (int i = 0; i < xyValues.size(); i++) {
+			/*If the counter is even (equivalent to the index of the x-values in the first column of the CSV file), then
+			add the value from the ArrayList of x and y values to the ArrayList of x-values. Since the ArrayList of x and y
+			values stores the values in a String format, Double.parseDouble is used to convert the values to Doubles and then
+			store them in the ArrayList of x-values.
+			*/
 			if (i % 2 == 0)
 				xValues.add(Double.parseDouble(xyValues.get(i)));
+			/*If the counter is odd (equivalent to the index of the values in the second column of the CSV file),
+			then smooth the values using the window value and the current index in the ArrayList of x and y values.
+			*/
 			if (i % 2 == 1) {
+				//Add the current y-value to the DescriptiveStatistics instance
 				stats.addValue(Double.parseDouble(xyValues.get(i)));
+				//Declare an average variable and store the rolling mean using the DescriptiveStatistics getMean method
 				Double average = stats.getMean();
+				/*Add the average value to the ArrayList of smoothed y-values. The y-value has already been converted to a 
+				Double and stored in the average variable so average is simply used to add the value to the list.
+				*/
 				doubleYValues.add(average);
+				//Reassign the value at the current index of the x and y values the new smoothed y-value
 				xyValues.set(i, average.toString());
 			}
 		}
 		
 		try {
+			//Create a new FileWriter instance using the smoothedCSV File object
 			FileWriter fWriter = new FileWriter(smoothedCSV);
+			//Loop through the x and y values
 			for (int i = 0; i < xyValues.size(); i++) {
+				//Write the current value to the file and separate it by a comma
 				fWriter.write(xyValues.get(i) + ",");
+				//Move too the next line after each pair of x and y values are written to the file
 				if (i % 2 != 0)
 					fWriter.write(System.lineSeparator());
 			}
+			//Close the FileWriter
 			fWriter.close();
+		//Catch any FileNotFoundExceptions and print the stack trace
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		//Catch any IOExceptions and print the stack trace
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		Graph plot = new Graph("Smoother", "Smoothed Data Third Run With a Window Size of " + windowValue, xValues, doubleYValues);
+		/*Create a new Graph object passing "Smoother" as the application name, a string describing the smoothed data and the window size
+		as the graph title, the ArrayList of x-values as the x-axis dataset, and the ArrayList of smoothed y-values as the y-axis dataset
+		*/
+		Graph plot = new Graph("Smoother", "Smoothed Data With a Window Size of " + windowValue, xValues, doubleYValues);
+		//Pack the Graph to size it to the preferred size
 		plot.pack();
+		//Set the Graph visibility to true so it shows the component
 		plot.setVisible(true);
 	}
 }
