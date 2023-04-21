@@ -1,3 +1,4 @@
+%Anthony D'Alessandro
 %Call the plotter function
 Plotter('xyValues.csv', 1, 500, 0.5)
 
