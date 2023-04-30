@@ -14,7 +14,7 @@ import org.jfree.chart.ui.*;
 
 public class Graph extends ApplicationFrame {
 	/*Graph method that takes parameters including an application title, graph title, ArrayList of doubles that hold x values, and 
-	an ArrayList of doubles that hold y values
+	an ArrayList of doubles that holds y values
 	*/
 	public Graph(String appTitle, String graphTitle, ArrayList<Double> xValues, ArrayList<Double> yValues) {
 		//Set the application title using the appTitle parameter
