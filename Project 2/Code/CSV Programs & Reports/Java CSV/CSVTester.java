@@ -1,7 +1,7 @@
 //Anthony D'Alessandro
 public class CSVTester {
 	public static void main(String[] args) {
-		//Create a new CSV object
+		//Create a new CSV object named commas
 		CSV commas = new CSV();
 		
 		//Call the plotter method using a minimum x-value of 1, maximum x-value of 50, and an increment value of 0.5
