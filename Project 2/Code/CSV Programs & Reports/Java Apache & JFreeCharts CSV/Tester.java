@@ -3,7 +3,7 @@ package jfreechart;
 
 public class Tester {
 	public static void main(String[] args) {
-		//Create a new ApacheJFreeChartsCSV object
+		//Create a new ApacheJFreeChartsCSV object named test
 		ApacheJFreeChartCSV test = new ApacheJFreeChartCSV();
 		
 		//Call the plotter method using a minimum x-value of 1, maximum x-value of 50, and an increment value of 0.5
